@@ -26,6 +26,7 @@ export class TestComponent implements OnInit {
         subscriptionKey: this.key
       }
     });
+    
 
     //Wait until the map resources are ready.
     this.map.events.add('ready', () => {
