@@ -26,7 +26,7 @@ export class TestComponent implements OnInit {
         subscriptionKey: this.key
       }
     });
-    
+
 
     //Wait until the map resources are ready.
     this.map.events.add('ready', () => {
@@ -35,6 +35,11 @@ export class TestComponent implements OnInit {
         color: 'DodgerBlue',
         text: '10',
         position: [10, 0]
+      }));
+      this.map.markers.add(new atlas.HtmlMarker({
+        color: 'Red',
+        text: '15',
+        position: [100, 0]
       }));
     });
   }
