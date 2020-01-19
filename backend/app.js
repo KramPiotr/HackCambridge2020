@@ -27,6 +27,26 @@ client.on('message', function (topic, message) {
   })
 var DatabaseAPI = require('./db/DatabaseAPI');
 DatabaseAPI.connect().then(()=>{
+    // let fakeData={
+    //     bins:[[52.206758, 0.111072],
+    //         [52.206679, 0.113701],
+    //         [52.208717, 0.111148],
+    //         [52.208438, 0.118490],
+    //         [52.204777, 0.119734],
+    //         [52.205148, 0.119394],
+    //         [52.204852, 0.118851]],
+    // }
+    // i = 10
+    // for(coordinations of fakeData.bins){
+    //     i+=1;
+    //     coordinations[0]+=Math.random()*0.006 * Math.pow(-1, i)
+    //     coordinations[1]+=Math.random()*0.004 * Math.pow(-1, i)
+    //     DatabaseAPI.save({id: i, latitude: coordinations[0], longtitude: coordinations[1], polluted: Math.floor(Math.random()*10)});
+    //     i+=3;
+    //     coordinations[0]+=Math.random()*0.007 * Math.pow(-1, i)
+    //     coordinations[1]+=Math.random()*0.005 * Math.pow(-1, i)
+    //     DatabaseAPI.save({id: i, latitude: coordinations[0], longtitude: coordinations[1], polluted: Math.floor(Math.random()*10)});
+    // }
     // DatabaseAPI.save({id: 1, latitude: 0, longtitude: 0, full: 50});
     // DatabaseAPI.save({id: 2, latitude: 10, longtitude: 10, full: 20}); 
     // DatabaseAPI.save({id: 3, latitude: 5, longtitude: -5, full: 40});
@@ -46,5 +66,5 @@ app.use("/map", mapRouter);
 //var testRouter = express.static("./routes/"//require("./routes/testAPI");
 //app.use("/testAPI", testRouter);
 
-app.listen(3000, '172.20.3.69');
+app.listen(3000, "0.0.0.0");
 

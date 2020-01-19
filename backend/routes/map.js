@@ -8,11 +8,12 @@ router.ws('/', function(ws, req) {
     console.log("Someone closed its connection with the websocket!");
   });
   ws.on('message', msg =>{
-    console.log("ELo elo elo "+msg);
+    //console.log("ELo elo elo "+msg);
+    console.log("New message received:  "+msg);
     msg = JSON.parse(msg);
-
-    console.log(msg)
-    console.log("xdxdxdxd "+ msg);
+   // console.log("New message received:  "+msg);
+    //console.log(msg)
+    //console.log("xdxdxdxd "+ msg);
     if(msg.type==="getData"){
       let filter = {latitude:{
         $gte: msg.leftCorner[0],
@@ -38,7 +39,16 @@ router.ws('/', function(ws, req) {
     }
     if(msg.type==="scoreUpdate"){
       DatabaseAPI.getUser({id: msg.userID}).then(user=>{
-        console.log("beczja w chuj", user);
+        //console.log("beczja w chuj", user);
+        if(user.length==0){
+          //console.log("Length of 0");
+          user = {
+            score: 0
+          };
+        }else{
+          //console.log("Otherwise user is an array "+user);
+          user = user[0];
+        }
         DatabaseAPI.updateUser({id: msg.userID, score: user.score+msg.scoreDelta});
       })
     }
@@ -46,7 +56,7 @@ router.ws('/', function(ws, req) {
       DatabaseAPI.getUser({id: msg.userID}).then(user=>{
         if(user.length==0){
           user = {
-            score: 10
+            score: 0
           };
         }else{
           user = user[0];
