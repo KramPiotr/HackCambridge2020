@@ -11,14 +11,17 @@ router.ws('/', function(ws, req) {
     msg = JSON.parse(msg);
     if(msg.type="getData"){
       let filter = {latitude:{
-        $gt: msg.leftCorner[0],
-        $lt: msg.rightCorner[0]
+        $gte: msg.leftCorner[0],
+        $lte: msg.rightCorner[0]
       },
        longtitude:{
-         $gt: msg.leftCorner[1],
-         $lt: msg.rightCorner[1]
+         $gte: msg.leftCorner[1],
+         $lte: msg.rightCorner[1]
        }};
      DatabaseAPI.retrieve(kind="bin", criteria=filter).then(binRes=>{
+       filter.polluted={
+         $gte: 3
+       }
         DatabaseAPI.retrieve(kind="map", criteria=filter).then(mapRes=>{
           answer = {
             type: "mapData",
