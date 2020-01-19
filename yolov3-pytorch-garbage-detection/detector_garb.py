@@ -169,6 +169,8 @@ def detect_image(model, args):
     start_time = datetime.now()
     print('Detecting...')
 
+    detected_trush = []
+
     for batchi, img_batch in tqdm(enumerate(img_batches)):
         img_tensors = [cv_image2tensor(img, input_size) for img in img_batch]
         img_tensors = torch.stack(img_tensors)
@@ -177,6 +179,8 @@ def detect_image(model, args):
             img_tensors = img_tensors.cuda()
         detections = model(img_tensors, args.cuda).cpu()
         detections = process_result(detections, args.obj_thresh, args.nms_thresh)
+
+        detected_trush.append(len(detections))
         if len(detections) == 0:
             continue
 
@@ -193,7 +197,7 @@ def detect_image(model, args):
     end_time = datetime.now()
     print('Detection finished in %s' % (end_time - start_time))
 
-    return
+    return detected_trush
 
 def main():
 
@@ -216,7 +220,10 @@ def main():
         detect_video(model, args)
 
     else:
-        detect_image(model, args)
+        trush_numbers = detect_image(model, args)
+        f = open("results.txt","w")
+        f.write(str(trush_numbers))
+        f.close()
 
 
 
