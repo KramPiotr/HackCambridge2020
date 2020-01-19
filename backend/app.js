@@ -42,6 +42,9 @@ DatabaseAPI.connect().then(()=>{
 });
 
 var mapRouter = require("./routes/map");
-app.use("/map", mapRouter)
+app.use("/map", mapRouter);
+//var testRouter = express.static("./routes/"//require("./routes/testAPI");
+//app.use("/testAPI", testRouter);
 
-app.listen(3000);
+app.listen(3000, '172.20.3.69');
+
