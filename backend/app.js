@@ -3,7 +3,7 @@ var app = express();
 var expressWs = require('express-ws');
 expressWs(app);
 var mqtt = require('mqtt')
-var client  = mqtt.connect('mqtt://172.20.4.157:1234')
+var client  = mqtt.connect('mqtt://172.20.10.11:1234')
 client.on('connect', function () {
     client.subscribe('bin', function (err) {
       if (err){

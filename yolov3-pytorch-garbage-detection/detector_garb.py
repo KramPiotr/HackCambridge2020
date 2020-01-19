@@ -13,6 +13,7 @@ import os
 import sys
 from datetime import datetime
 from tqdm import tqdm
+import paho.mqtt.client as mqtt
 
 def load_classes(namesfile):
     fp = open(namesfile, "r")
@@ -229,7 +230,11 @@ def main():
         f = open("results.txt","w")
         f.write(str(trush_numbers))
         f.close()
-
+        client = mqtt.Client()
+        client.connect("172.20.10.11", 1234, 60)
+        message = "{\"id\":5,\"latitude\":50,\"longtitude\":0,\"polluted\":"+str(trush_numbers[0])+"}"
+        client.publish("map", message)
+        client.disconnect()
 
 
 if __name__ == '__main__':
