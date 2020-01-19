@@ -49,7 +49,7 @@ def draw_bbox(imgs, bbox, colors, classes,read_frames,output_path):
 
     label = label+' '+str(confidence)+'%'
 
-    print(label)
+    #print(label)
 
     p1 = tuple(bbox[1:3].int())
     p2 = tuple(bbox[3:5].int())
@@ -152,10 +152,11 @@ def detect_image(model, args):
 
     print('Loading input image(s)...')
     input_size = [int(model.net_info['height']), int(model.net_info['width'])]
-    batch_size = int(model.net_info['batch'])
+    batch_size = 1#int(model.net_info['batch'])
 
     imlist, imgs = load_images(args.input)
     print('Input image(s) loaded')
+    print("Loaded {} images".format(len(imgs)))
 
     img_batches = create_batches(imgs, batch_size)
 
@@ -170,6 +171,7 @@ def detect_image(model, args):
     print('Detecting...')
 
     detected_trush = []
+
 
     for batchi, img_batch in tqdm(enumerate(img_batches)):
         img_tensors = [cv_image2tensor(img, input_size) for img in img_batch]
@@ -208,8 +210,11 @@ def main():
         sys.exit(1)
 
     print('Loading network...')
+
+
     model = Darknet("cfg/yolov3_garb.cfg")
     model.load_weights('weights/garb.weights')
+
     if args.cuda:
         model.cuda()
 
