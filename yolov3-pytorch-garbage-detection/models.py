@@ -216,11 +216,6 @@ class Darknet(nn.Module):
         self.seen = np.array([0], dtype=np.int64)  # (int64) number of images seen during training
 
     def forward(self, x, var=None):
-        '''
-        :param x: 3d image
-        :param var:
-        :return:
-        '''
         img_size = x.shape[-2:]
         layer_outputs = []
         output = []

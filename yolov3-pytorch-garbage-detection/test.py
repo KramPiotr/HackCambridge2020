@@ -71,8 +71,6 @@ def test(cfg,
 
         # Run model
         inf_out, train_out = model(imgs)  # inference and training outputs
-        print("SHAPE THAT WORKS {}".format(imgs.shape))
-        print("TRAIN OUT -----------------", train_out)
 
         # Compute loss
         if hasattr(model, 'hyp'):  # if model has loss hyperparameters
