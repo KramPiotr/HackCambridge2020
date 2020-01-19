@@ -14,7 +14,7 @@ router.ws('/', function(ws, req) {
    // console.log("New message received:  "+msg);
     //console.log(msg)
     //console.log("xdxdxdxd "+ msg);
-    if(msg.type==="getData"){
+    if(msg.type.startsWith("getData")){
       let filter = {latitude:{
         $gte: msg.leftCorner[0],
         $lte: msg.rightCorner[0]
@@ -25,15 +25,24 @@ router.ws('/', function(ws, req) {
        }};
      DatabaseAPI.retrieve(kind="bin", criteria=filter).then(binRes=>{
        filter.polluted={
-         $gte: 3
-       }
+         $gte: 3  
+       };
         DatabaseAPI.retrieve(kind="map", criteria=filter).then(mapRes=>{
           answer = {
             type: "mapData",
             bin: binRes,
             map: mapRes
           };
-          ws.send(JSON.stringify(answer));
+          if(msg.type==="getDataWeb"){
+            //ws.send(JSON.stringify(binRes)+"|"+JSON.stringify(mapRes));
+            answer = {};
+            answer["_"+JSON.stringify(binRes)] = 0;
+            answer["_"+JSON.stringify(mapRes)] = 0;
+          }
+            ws.send(JSON.stringify(answer));
+          
+          //console.log("xd" + binres+" eloelo "+mapRes);
+          
         })
       });
     }
